@@ -1,0 +1,30 @@
+.logo {
+    height: 10vh;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  nz-header {
+    background: #f0f2f5;
+    padding: 0;
+    height: 10vh;
+    display: flex;
+    justify-content: end;
+    margin-right: 10px;
+    align-items: center;
+
+  }
+
+  nz-breadcrumb {
+    margin: 16px 0;
+  }
+
+  nz-content {
+    padding: 24px;
+    background: #fff;
+    height: 82vh;
+  }
+
+  nz-footer {
+    text-align: center;
+    height: 8vh;
+  }

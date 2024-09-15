@@ -1,0 +1,86 @@
+<div class="login-container">
+  <!-- Login Form -->
+  <div class="login-box" *ngIf="!isForgotPassword && !isSetNewPassword">
+    <h2>Login</h2>
+    <form nz-form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="'Please input your mail!'">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="mail" placeholder="Mail" required />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="'Please input your password!'">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password" placeholder="Password" required />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" class="login-form-button" [disabled]="loginForm.invalid">Log in</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+
+    <!-- Forgot Password Link -->
+    <button nz-button nzType="link" (click)="toggleForgotPassword()">Forgot Password?</button>
+  </div>
+
+  <!-- Forgot Password Form -->
+  <div class="login-box" *ngIf="isForgotPassword">
+    <h2>Forgot Password</h2>
+    <form nz-form>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="'Please input your email!'">
+          <nz-input-group nzPrefixIcon="mail">
+            <input type="email" nz-input placeholder="Email" required />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" class="login-form-button">Send Reset Link</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+
+    <!-- Back to Login Link -->
+    <button nz-button nzType="link" (click)="toggleForgotPassword()">Back to Login</button>
+  </div>
+   <!-- Set New Password Form -->
+   <div class="login-box" *ngIf="isSetNewPassword">
+    <h2>Set New Password</h2>
+    <form nz-form [formGroup]="newPasswordForm" (ngSubmit)="setNewPassword()">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="'Please input your new password!'">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="newPassword" placeholder="New Password" required />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="'Please confirm your new password!'">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="confirmPassword" placeholder="Confirm Password" required />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" class="login-form-button" [disabled]="newPasswordForm.invalid">Set New Password</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <button nz-button nzType="link" (click)="toggleSetNewPassword()">Back to Login</button>
+  </div>
+</div>
+
+<nz-footer>© 2024 Medi Clinic. All rights reserved.</nz-footer>
+

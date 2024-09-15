@@ -1,0 +1,45 @@
+<nz-layout>
+    <nz-sider nzCollapsible nzWidth="200px">
+      <div class="logo"></div>
+      <ul nz-menu nzTheme="dark" nzMode="inline">
+        <li nz-menu-item routerLink="/home/staffs" routerLinkActive="active">
+            <span nz-icon nzType="file" nzTheme="outline"></span>
+            <span>Staffs</span>
+        </li>
+        <li nz-menu-item routerLink="/home/hospitals" routerLinkActive="active">
+            <span nz-icon nzType="file" nzTheme="outline"></span>
+            <span>Hospitals</span>
+        </li>
+        <li nz-menu-item routerLink="/home/inventories" routerLinkActive="active">
+            <span nz-icon nzType="file" nzTheme="outline"></span>
+            <span>Inventories</span>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout>
+      <nz-header>
+        <nz-avatar
+        nzDropdown
+        nzDropdownMenu="menu"
+        [ngStyle]="{ 'background-color': 'orange' }"
+        nzText="A"
+        nzSize="large"
+        style="vertical-align: middle; cursor: pointer;"
+      ></nz-avatar>
+
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="onSignOut()">Sign Out</li>
+        </ul>
+      </nz-dropdown-menu>
+      </nz-header>
+      <nz-content>
+        <router-outlet></router-outlet>
+        <!-- <nz-breadcrumb>
+          <nz-breadcrumb-item>User</nz-breadcrumb-item>
+          <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
+        </nz-breadcrumb> -->
+      </nz-content>
+      <nz-footer>© 2024 Medi Clinic. All rights reserved.</nz-footer>
+    </nz-layout>
+  </nz-layout>

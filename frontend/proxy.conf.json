@@ -1,0 +1,8 @@
+{
+    "/v1/auth": {
+      "target": "https://medic-clinic-service.onrender.com",
+      "secure": true,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
