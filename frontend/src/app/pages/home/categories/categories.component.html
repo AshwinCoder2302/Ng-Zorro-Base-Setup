@@ -1,0 +1,36 @@
+<nz-table [nzScroll]="{ x: '1000px', y: '400px' }" ngSkipHydration>
+  <thead>
+    <tr>
+      <th nzWidth="20%">Category Name</th>
+      <th nzWidth="20%">Price</th>
+      <th nzWidth="20%">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories">
+      <td>{{ category.name }}</td>
+      <td>{{ category.price }}</td>
+      <td>
+        <button nz-button nzType="link" (click)="onEditCategory(category)">
+          <i nz-icon nzType="edit"></i> Edit
+        </button>
+        <button nz-button nzType="link" (click)="onDeleteCategory(category)">
+          <i nz-icon nzType="delete"></i> Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<!-- <nz-table [nzScroll]="{ x: '1000px', y: '400px' }">
+  <thead>
+    <tr>
+      <th nzWidth="20%">Category Name</th>
+      <th nzWidth="20%">Price</th>
+      <th nzWidth="20%">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr></tr>
+  </tbody>
+</nz-table> -->

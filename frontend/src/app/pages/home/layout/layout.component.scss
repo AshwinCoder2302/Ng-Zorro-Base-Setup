@@ -8,23 +8,21 @@
     padding: 0;
     height: 10vh;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     margin-right: 10px;
     align-items: center;
-
   }
 
   nz-breadcrumb {
-    margin: 16px 0;
+    margin-left: 10px;
   }
 
   nz-content {
     padding: 24px;
     background: #fff;
-    height: 82vh;
+    height: 90vh;
   }
 
-  nz-footer {
-    text-align: center;
-    height: 8vh;
+  .sider {
+    height: 100vh;
   }

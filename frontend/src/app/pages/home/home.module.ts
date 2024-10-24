@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';  // Import this for reactive forms
-import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/login/login.component';
+import { CommonModule } from '@angular/common';
+import { CategoriesComponent } from './categories/categories.component';
+import { LayoutComponent } from './layout/layout.component';
+import { ProductsComponent } from './products/products.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -19,15 +17,18 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { HomeModule } from './pages/home/home.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from '../../app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent
+    CategoriesComponent,
+    LayoutComponent,
+    ProductsComponent
   ],
   imports: [
-    HomeModule,
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,  
@@ -44,13 +45,6 @@ import { HomeModule } from './pages/home/home.module';
     NzAvatarModule,
     NzDropDownModule,
     NzTableModule
-  ],
-  providers: [
-    provideClientHydration(),
-    provideHttpClient(withFetch())
-    // You can provide HTTP interceptors here if needed for authentication
-    // { provide: HTTP_INTERCEPTORS, useClass: YourInterceptorClass, multi: true }
-  ],
-  bootstrap: [AppComponent]
+  ]
 })
-export class AppModule { }
+export class HomeModule { }

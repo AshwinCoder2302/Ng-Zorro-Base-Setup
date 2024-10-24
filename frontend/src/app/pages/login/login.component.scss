@@ -1,29 +1,23 @@
 .login-container {
-    height: 100vh;
+    height: 92vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('../../../assets/images/login-page-bg.png');
+    background-image: url('../../../assets/images/clothes-1839935_1280.jpg');
     background-size: cover;
     background-position: center;
   }
   
   .login-box {
+    margin-left:800px;
+    margin-top: 200px;
     width: 400px;
     padding: 40px;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
   }
-
   
-  footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    background-color: #001529;
-    color: white;
-    padding: 10px 0;
+  nz-footer {
+    height: 8vh;
   }
-  

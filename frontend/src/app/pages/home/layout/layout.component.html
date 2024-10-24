@@ -1,0 +1,38 @@
+<nz-layout>
+  <nz-sider nzCollapsible nzWidth="200px" class="sider">
+    <div class="logo"></div>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-menu-item (click)="navigateToCategories()">
+        <span nz-icon nzType="file" nzTheme="outline"></span>
+        <span>Categories</span>
+      </li>
+      <li nz-menu-item (click)="navigateToProducts()">
+        <span nz-icon nzType="file" nzTheme="outline"></span>
+        <span>Products</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item><a (click)="navigateToHome()">Home</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <a>{{breadcrumb}}</a>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <nz-avatar
+        nzDropdown
+        nzDropdownMenu="menu"
+        [ngStyle]="{ 'background-color': 'orange' }"
+        nzText="A"
+        nzSize="large"
+        style="vertical-align: middle; cursor: pointer;"
+      ></nz-avatar>
+
+    </nz-header>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+  

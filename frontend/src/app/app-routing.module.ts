@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { StaffComponent } from './pages/staff/staff.component';
-import { LayoutComponent } from './pages/layout/layout.component';
-import { HospitalComponent } from './pages/hospital/hospital.component';
-import { InventoryComponent } from './pages/inventory/inventory.component';
+import { LayoutComponent } from './pages/home/layout/layout.component';
+import { CategoriesComponent } from './pages/home/categories/categories.component';
+import { ProductsComponent } from './pages/home/products/products.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent }, 
+  // { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // { path: 'login', component: LoginComponent }, 
   {
     path: 'home',
     component: LayoutComponent,
     children: [
-      { path: 'staffs', component: StaffComponent },
-      { path: 'hospitals', component: HospitalComponent }, 
-      { path: 'inventories', component: InventoryComponent }, 
-    ],
+      { path: '', redirectTo: 'categories', pathMatch: 'full' },
+      { path: 'categories', component: CategoriesComponent },
+      { path: 'products', component: ProductsComponent },
+      { path: '**', redirectTo: 'categories' } // Fallback route
+    ]
   },
-  { path: '**', redirectTo: 'login' } 
+  // { path: '**', redirectTo: 'login' } 
 ];
 
 @NgModule({
