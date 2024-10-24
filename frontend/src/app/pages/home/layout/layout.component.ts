@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NzPlacementType } from 'ng-zorro-antd/dropdown';
 
 @Component({
   selector: 'app-layout',
@@ -9,6 +10,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class LayoutComponent {
 
   breadcrumb: string = '';
+
+  position: NzPlacementType = 'bottomRight';
 
   constructor( private router: Router, private route: ActivatedRoute){
     this.breadcrumb = ''

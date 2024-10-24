@@ -29,13 +29,20 @@
         </nz-breadcrumb-item>
       </nz-breadcrumb>
       <nz-avatar
-        nzDropdown
-        nzDropdownMenu="menu"
+        nz-button
+        nz-dropdown
+        [nzDropdownMenu]="avatarMenu"
+        [nzPlacement]="position"
         [ngStyle]="{ 'background-color': 'orange' }"
         nzText="A"
         nzSize="large"
         style="vertical-align: middle; cursor: pointer;"
       ></nz-avatar>
+      <nz-dropdown-menu #avatarMenu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item>Logout</li>
+        </ul>
+      </nz-dropdown-menu>
     </nz-header>
     <nz-content>
       <router-outlet></router-outlet>

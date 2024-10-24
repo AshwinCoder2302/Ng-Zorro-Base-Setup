@@ -26,6 +26,7 @@ import { NzCardModule } from 'ng-zorro-antd/card'; // For the cards
 import { AllIcons } from '../../icon-collection';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { UsersComponent } from './users/users.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { UsersComponent } from './users/users.component';
     UsersComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     NzStatisticModule,
     NzCardModule,
     CommonModule,
