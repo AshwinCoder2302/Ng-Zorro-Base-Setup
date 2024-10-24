@@ -24,21 +24,15 @@ export class ProductsComponent {
     { id: 10, name: 'Product 10', price: 200, category: 'Category 10' },
   ];
 
-  // Add product
   onAddProduct(): void {
-    // Open modal or navigate to product form
     console.log('Add product button clicked');
   }
 
-  // Edit product
   onEditProduct(product: any): void {
-    // Open modal or navigate to product edit form
     console.log('Edit product:', product);
   }
 
-  // Delete product
   onDeleteProduct(product: any): void {
-    // Confirm deletion and remove product from list
     this.products = this.products.filter(p => p.id !== product.id);
     console.log('Deleted product:', product);
   }
