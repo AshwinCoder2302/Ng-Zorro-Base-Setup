@@ -20,14 +20,24 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from '../../app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic'; // Import the statistic module
+import { NzCardModule } from 'ng-zorro-antd/card'; // For the cards
+import { AllIcons } from '../../icon-collection';
+import { NZ_ICONS } from 'ng-zorro-antd/icon';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
     CategoriesComponent,
     LayoutComponent,
-    ProductsComponent
+    ProductsComponent,
+    DashboardComponent,
+    UsersComponent
   ],
   imports: [
+    NzStatisticModule,
+    NzCardModule,
     CommonModule,
     BrowserModule,
     AppRoutingModule,
@@ -44,7 +54,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     NzBreadCrumbModule,
     NzAvatarModule,
     NzDropDownModule,
-    NzTableModule
-  ]
+    NzTableModule,
+  ],
+  providers: [
+    { provide: NZ_ICONS, useValue: AllIcons } // Register icons here
+  ],
 })
 export class HomeModule { }

@@ -1,0 +1,19 @@
+<nz-card nzTitle="Dashboard Overview" nzBordered [ngStyle]="{ 'background-color': '#f0f2f5', 'border-radius': '8px', 'box-shadow': '0 2px 8px rgba(0, 0, 0, 0.15)' }">
+  <div nz-row nzGutter="16">
+    <div nz-col [nzSpan]="8">
+      <nz-card class="custom-card users-card">
+        <nz-statistic [nzTitle]="'Users'" [nzValue]="usersCount"></nz-statistic>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-card class="custom-card categories-card">
+        <nz-statistic [nzTitle]="'Categories'" [nzValue]="categoriesCount"></nz-statistic>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-card class="custom-card products-card">
+        <nz-statistic [nzTitle]="'Products'" [nzValue]="productsCount"></nz-statistic>
+      </nz-card>
+    </div>
+  </div>
+</nz-card>

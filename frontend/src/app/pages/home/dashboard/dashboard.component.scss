@@ -1,0 +1,25 @@
+.custom-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    color: white; /* Text color to stand out against the card background */
+  }
+  
+  /* Specific card background colors */
+  .users-card {
+    background-color: #1890ff; /* Blue for users */
+  }
+  
+  .categories-card {
+    background-color: #52c41a; /* Green for categories */
+  }
+  
+  .products-card {
+    background-color: #fa8c16; /* Orange for products */
+  }
+  
+  /* Styling the overall container */
+  nz-card[nzTitle="Dashboard Overview"] {
+    border: 1px solid #e8e8e8;
+    background-color: white;
+  }
+  

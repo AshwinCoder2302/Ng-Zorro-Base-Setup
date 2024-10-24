@@ -12,10 +12,10 @@
       <td>{{ category.price }}</td>
       <td>
         <button nz-button nzType="link" (click)="onEditCategory(category)">
-          <i nz-icon nzType="edit"></i> Edit
+          <span nz-icon nzType="edit" nzTheme="fill"></span>
         </button>
         <button nz-button nzType="link" (click)="onDeleteCategory(category)">
-          <i nz-icon nzType="delete"></i> Delete
+          <span style="color: red;" nz-icon nzType="delete" nzTheme="fill"></span>       
         </button>
       </td>
     </tr>

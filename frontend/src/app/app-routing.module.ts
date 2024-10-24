@@ -4,18 +4,20 @@ import { LoginComponent } from './pages/login/login.component';
 import { LayoutComponent } from './pages/home/layout/layout.component';
 import { CategoriesComponent } from './pages/home/categories/categories.component';
 import { ProductsComponent } from './pages/home/products/products.component';
+import { DashboardComponent } from './pages/home/dashboard/dashboard.component';
+import { UsersComponent } from './pages/home/users/users.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
   // { path: 'login', component: LoginComponent }, 
   {
-    path: 'home',
+    path: 'dashboard',
     component: LayoutComponent,
     children: [
-      { path: '', redirectTo: 'categories', pathMatch: 'full' },
+      { path: '', component: DashboardComponent },
+      { path: 'users', component: UsersComponent},
       { path: 'categories', component: CategoriesComponent },
       { path: 'products', component: ProductsComponent },
-      { path: '**', redirectTo: 'categories' } // Fallback route
     ]
   },
   // { path: '**', redirectTo: 'login' } 

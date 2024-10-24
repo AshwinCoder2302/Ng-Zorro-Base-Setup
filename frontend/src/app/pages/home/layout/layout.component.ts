@@ -11,7 +11,7 @@ export class LayoutComponent {
   breadcrumb: string = '';
 
   constructor( private router: Router, private route: ActivatedRoute){
-    this.breadcrumb = 'Category'
+    this.breadcrumb = ''
   }
 
   isCollapsed = false;
@@ -22,16 +22,21 @@ export class LayoutComponent {
 
   navigateToCategories() {
     this.breadcrumb = 'Category'
-    this.router.navigate(['home/categories']);
+    this.router.navigate(['dashboard/categories']);
   }
 
   navigateToProducts() {
     this.breadcrumb = 'Products'
-    this.router.navigate(['home/products']);
+    this.router.navigate(['dashboard/products']);
   }
 
-  navigateToHome() {
+  navigateToDashboard() {
     this.breadcrumb = ''
-    this.router.navigate(['home']);
+    this.router.navigate(['dashboard']);
+  }
+
+  navigateToUser() {
+    this.breadcrumb = 'Users'
+    this.router.navigate(['dashboard/users']);
   }
 }

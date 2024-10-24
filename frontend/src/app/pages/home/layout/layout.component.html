@@ -2,21 +2,29 @@
   <nz-sider nzCollapsible nzWidth="200px" class="sider">
     <div class="logo"></div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-menu-item (click)="navigateToDashboard()">
+        <span nz-icon nzType="dashboard" nzTheme="outline"></span>
+        <span>Dashboard</span>
+      </li>
+      <li nz-menu-item (click)="navigateToUser()">
+        <span nz-icon nzType="team" nzTheme="outline"></span>
+        <span>Users</span>
+      </li>
       <li nz-menu-item (click)="navigateToCategories()">
-        <span nz-icon nzType="file" nzTheme="outline"></span>
+        <span nz-icon nzType="appstore" nzTheme="outline"></span>
         <span>Categories</span>
       </li>
       <li nz-menu-item (click)="navigateToProducts()">
-        <span nz-icon nzType="file" nzTheme="outline"></span>
+        <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
         <span>Products</span>
       </li>
-    </ul>
+    </ul> 
   </nz-sider>
   <nz-layout>
     <nz-header>
       <nz-breadcrumb>
-        <nz-breadcrumb-item><a (click)="navigateToHome()">Home</a></nz-breadcrumb-item>
-        <nz-breadcrumb-item>
+        <nz-breadcrumb-item><a (click)="navigateToDashboard()">Dashboard</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item *ngIf="breadcrumb">
           <a>{{breadcrumb}}</a>
         </nz-breadcrumb-item>
       </nz-breadcrumb>
@@ -28,7 +36,6 @@
         nzSize="large"
         style="vertical-align: middle; cursor: pointer;"
       ></nz-avatar>
-
     </nz-header>
     <nz-content>
       <router-outlet></router-outlet>

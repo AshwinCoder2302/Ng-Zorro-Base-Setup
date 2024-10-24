@@ -2,6 +2,10 @@
     height: 10vh;
     background: rgba(255, 255, 255, 0.3);
   }
+  
+  .nz-breadcrumb-item:first-child:last-child .ant-breadcrumb-separator {
+    display: none;
+  }
 
   nz-header {
     background: #f0f2f5;
