@@ -27,6 +27,7 @@ import { AllIcons } from '../../icon-collection';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { UsersComponent } from './users/users.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LayoutComponent,
     ProductsComponent,
     DashboardComponent,
-    UsersComponent
+    UsersComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserAnimationsModule,

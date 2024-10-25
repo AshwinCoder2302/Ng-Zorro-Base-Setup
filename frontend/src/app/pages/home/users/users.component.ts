@@ -31,4 +31,8 @@ export class UsersComponent {
     this.users = this.users.filter(p => p.id !== category.id);
     console.log('Deleted category:', category);
   }
+
+  onAddUser(){
+    
+  }
 }

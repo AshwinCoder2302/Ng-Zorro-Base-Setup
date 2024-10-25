@@ -25,12 +25,12 @@ export class LayoutComponent {
 
   navigateToCategories() {
     this.breadcrumb = 'Category'
-    this.router.navigate(['dashboard/categories']);
+    this.router.navigate(['categories']);
   }
 
   navigateToProducts() {
     this.breadcrumb = 'Products'
-    this.router.navigate(['dashboard/products']);
+    this.router.navigate(['products']);
   }
 
   navigateToDashboard() {
@@ -40,6 +40,14 @@ export class LayoutComponent {
 
   navigateToUser() {
     this.breadcrumb = 'Users'
-    this.router.navigate(['dashboard/users']);
+    this.router.navigate(['users']);
+  }
+
+  navigateToLogin(){
+    this.router.navigate(['login']);
+  }
+
+  navigateToProfile(){
+    this.router.navigate(['profile']);
   }
 }

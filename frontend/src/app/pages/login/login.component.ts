@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit{
   // temporary login function. Use above for backend interaction
 
    login(loginRequest: any): void {
-      this.router.navigate(['/home/categories']);
+      this.router.navigate(['dashboard']);
   }
 
   setNewPassword(): void {

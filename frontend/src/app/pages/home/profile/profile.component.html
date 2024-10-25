@@ -1,0 +1,33 @@
+<!-- Profile Page -->
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <nz-card style="width: 400px; position: relative; background-color: #f8f9fa; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+      
+      <button 
+        nz-button 
+        nzType="default" 
+        nzShape="circle" 
+        style="position: absolute; top: 10px; right: 10px; color: #1890ff; border-color: #1890ff;"
+        >
+        <span nz-icon nzType="edit"></span>
+      </button>
+      
+      <ul style="list-style: none; padding: 20px 0; font-size: 16px;">
+        <li>
+          <strong>Name:</strong> {{ user.name }}
+        </li>
+        <li>
+          <strong>Phone Number:</strong> {{ user.phoneNumber }}
+        </li>
+        <li>
+          <strong>Email:</strong> {{ user.email }}
+        </li>
+        <li>
+          <strong>Role:</strong> {{ user.role }}
+        </li>
+        <li>
+          <strong>Gender:</strong> {{ user.gender }}
+        </li>
+      </ul>
+    </nz-card>
+  </div>
+  

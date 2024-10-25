@@ -6,18 +6,20 @@ import { CategoriesComponent } from './pages/home/categories/categories.componen
 import { ProductsComponent } from './pages/home/products/products.component';
 import { DashboardComponent } from './pages/home/dashboard/dashboard.component';
 import { UsersComponent } from './pages/home/users/users.component';
+import { ProfileComponent } from './pages/home/profile/profile.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'login', pathMatch: 'full' },
-  // { path: 'login', component: LoginComponent }, 
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent }, 
   {
-    path: 'dashboard',
+    path: '',
     component: LayoutComponent,
     children: [
-      { path: '', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'users', component: UsersComponent},
       { path: 'categories', component: CategoriesComponent },
       { path: 'products', component: ProductsComponent },
+      { path: 'profile', component: ProfileComponent}
     ]
   },
   // { path: '**', redirectTo: 'login' } 

@@ -1,6 +1,6 @@
 <nz-layout>
   <nz-sider nzCollapsible nzWidth="200px" class="sider">
-    <div class="logo"></div>
+    <div class="logo">Drunk Mart</div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
       <li nz-menu-item (click)="navigateToDashboard()">
         <span nz-icon nzType="dashboard" nzTheme="outline"></span>
@@ -40,11 +40,12 @@
       ></nz-avatar>
       <nz-dropdown-menu #avatarMenu="nzDropdownMenu">
         <ul nz-menu>
-          <li nz-menu-item>Logout</li>
+          <li nz-menu-item (click)="navigateToProfile()"><span nz-icon nzType="user" nzTheme="outline"></span> Profile</li>
+          <li nz-menu-item (click)="navigateToLogin()"><span nz-icon nzType="logout" style="color:red;"></span> Sign Out</li>
         </ul>
       </nz-dropdown-menu>
     </nz-header>
-    <nz-content>
+    <nz-content style="border-top: 4px solid #e0e0e0;">
       <router-outlet></router-outlet>
     </nz-content>
   </nz-layout>
