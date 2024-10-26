@@ -2,19 +2,19 @@
   <nz-sider nzCollapsible nzWidth="200px" class="sider">
     <div class="logo">Drunk Mart</div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-menu-item (click)="navigateToDashboard()">
+      <li nz-menu-item (click)="navigateToComponent('Dashboard')" [ngClass]="{ 'active': selectedMenu === 'Dashboard' }">
         <span nz-icon nzType="dashboard" nzTheme="outline"></span>
         <span>Dashboard</span>
       </li>
-      <li nz-menu-item (click)="navigateToUser()">
+      <li nz-menu-item (click)="navigateToComponent('Users')" [ngClass]="{ 'active': selectedMenu === 'Users' }">
         <span nz-icon nzType="team" nzTheme="outline"></span>
         <span>Users</span>
       </li>
-      <li nz-menu-item (click)="navigateToCategories()">
+      <li nz-menu-item (click)="navigateToComponent('Categories')" [ngClass]="{ 'active': selectedMenu === 'Categories' }">
         <span nz-icon nzType="appstore" nzTheme="outline"></span>
         <span>Categories</span>
       </li>
-      <li nz-menu-item (click)="navigateToProducts()">
+      <li nz-menu-item (click)="navigateToComponent('Products')" [ngClass]="{ 'active': selectedMenu === 'Products' }">
         <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
         <span>Products</span>
       </li>
@@ -23,7 +23,6 @@
   <nz-layout>
     <nz-header>
       <nz-breadcrumb>
-        <nz-breadcrumb-item><a (click)="navigateToDashboard()">Dashboard</a></nz-breadcrumb-item>
         <nz-breadcrumb-item *ngIf="breadcrumb">
           <a>{{breadcrumb}}</a>
         </nz-breadcrumb-item>
@@ -40,8 +39,8 @@
       ></nz-avatar>
       <nz-dropdown-menu #avatarMenu="nzDropdownMenu">
         <ul nz-menu>
-          <li nz-menu-item (click)="navigateToProfile()"><span nz-icon nzType="user" nzTheme="outline"></span> Profile</li>
-          <li nz-menu-item (click)="navigateToLogin()"><span nz-icon nzType="logout" style="color:red;"></span> Sign Out</li>
+          <li nz-menu-item (click)="navigateToComponent('Profile')"><span nz-icon nzType="user" nzTheme="outline"></span> Profile</li>
+          <li nz-menu-item (click)="navigateToComponent('Sign Out')"><span nz-icon nzType="logout" style="color:red;"></span> Sign Out</li>
         </ul>
       </nz-dropdown-menu>
     </nz-header>

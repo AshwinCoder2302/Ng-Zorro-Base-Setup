@@ -11,43 +11,28 @@ export class LayoutComponent {
 
   breadcrumb: string = '';
 
+  selectedMenu: string = '';
+
   position: NzPlacementType = 'bottomRight';
 
   constructor( private router: Router, private route: ActivatedRoute){
-    this.breadcrumb = ''
+   this.breadcrumb = 'Dashboard'
+   this.selectedMenu = 'Dashboard';
   }
 
-  isCollapsed = false;
-
-  onSignOut(): void {
-    this.router.navigate(['/login']);
-  }
-
-  navigateToCategories() {
-    this.breadcrumb = 'Category'
-    this.router.navigate(['categories']);
-  }
-
-  navigateToProducts() {
-    this.breadcrumb = 'Products'
-    this.router.navigate(['products']);
-  }
-
-  navigateToDashboard() {
-    this.breadcrumb = ''
-    this.router.navigate(['dashboard']);
-  }
-
-  navigateToUser() {
-    this.breadcrumb = 'Users'
-    this.router.navigate(['users']);
-  }
-
-  navigateToLogin(){
-    this.router.navigate(['login']);
-  }
-
-  navigateToProfile(){
-    this.router.navigate(['profile']);
+  navigateToComponent(menu: string): void {
+    if (menu === 'Sign Out') {
+      this.selectedMenu = '';
+      this.breadcrumb = '';
+      this.router.navigate(['login']); 
+    } else if (menu === 'Profile') {
+      this.selectedMenu = '';
+      this.breadcrumb = 'Profile';
+      this.router.navigate(['profile']);
+    } else {
+      this.selectedMenu = menu;
+      this.breadcrumb = menu;
+      this.router.navigate([menu.toLowerCase()]);
+    }
   }
 }
