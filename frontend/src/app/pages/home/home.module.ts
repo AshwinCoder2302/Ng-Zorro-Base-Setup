@@ -28,6 +28,7 @@ import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { UsersComponent } from './users/users.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { ProfileComponent } from './profile/profile.component';
     NzAvatarModule,
     NzDropDownModule,
     NzTableModule,
+    HttpClientModule
   ],
   providers: [
     { provide: NZ_ICONS, useValue: AllIcons } // Register icons here

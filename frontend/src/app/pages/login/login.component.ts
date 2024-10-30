@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { LoginService } from '../../services/login.service';
 import { LoginResponse } from '../../models/login.response';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +16,14 @@ import { LoginResponse } from '../../models/login.response';
 })
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
+
+  signupForm!: FormGroup;
+
   newPasswordForm!: FormGroup;
 
   isForgotPassword: boolean = false; 
 
-  isSetNewPassword: boolean = false; 
+  isSignUp: boolean = false;
 
   hospital!: Hospital;
 
@@ -29,11 +34,20 @@ export class LoginComponent implements OnInit{
     private message: NzMessageService,
     private notification: NzNotificationService,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
   }
 
   ngOnInit(): void {    
+      this.signupForm = this.fb.group({
+        username: [null, [Validators.required]], 
+        password: [null, [Validators.required]],
+        gender: [null, [Validators.required]],
+        role: [null, [Validators.required]],
+        mobileNo: [null, [Validators.required]],
+        emailId: [null, [Validators.required]]
+      });
       this.loginForm = this.fb.group({
         mail: [null, [Validators.required]], 
         password: [null, [Validators.required]] 
@@ -48,8 +62,13 @@ export class LoginComponent implements OnInit{
     this.isForgotPassword = !this.isForgotPassword;
   }
 
-  toggleSetNewPassword(): void {
-    this.isSetNewPassword = !this.isSetNewPassword;
+  toggleSignUp(): void {
+    this.isSignUp = !this.isSignUp;
+  }
+
+  toggleLogin(): void {
+    this.isSignUp = false;
+    this.isForgotPassword = false;
   }
 
   submitForm(): void {
@@ -58,6 +77,21 @@ export class LoginComponent implements OnInit{
     } else {
       this.message.error('Please fill in all required fields!'); 
     }
+  }
+
+  signup(): void {
+    if(this.signupForm.valid){
+      console.log("Values========>"+this.signupForm.value);
+      console.log("Sign up =======>"+this.signupForm.value.username);
+      this.createUser(this.signupForm.value).subscribe(response => {
+        console.log('User created:', response);
+      });
+    }
+  }
+
+  createUser(userData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(`http://localhost:8082/user`, userData, { headers });
   }
 
 // use below login funtion to call back end login api to get access token
@@ -78,18 +112,6 @@ export class LoginComponent implements OnInit{
 
    login(loginRequest: any): void {
       this.router.navigate(['dashboard']);
-  }
-
-  setNewPassword(): void {
-    if (this.newPasswordForm.valid) {
-      const { newPassword, confirmPassword } = this.newPasswordForm.value;
-      if (newPassword === confirmPassword) {
-        console.log('New password set successfully');
-        this.toggleSetNewPassword();
-      } else {
-        console.error('Passwords do not match');
-      }
-    }
   }
 
   createNotification(type: string): void {
