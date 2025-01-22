@@ -1,5 +1,5 @@
 export const environment = {
-  local: false,
+  local: true,
   serverBaseURL: 'https://medic-clinic-service.onrender.com',
-  localBaseURL: 'http://192.168.1.7:8080'
+  localBaseURL: 'http://localhost:8081/ums'
 };

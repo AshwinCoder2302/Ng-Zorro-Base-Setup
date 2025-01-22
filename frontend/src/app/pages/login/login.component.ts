@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Hospital } from '../../models/hospital.models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message'; 
 import { Router } from '@angular/router'; 
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { LoginService } from '../../services/login.service';
 import { LoginResponse } from '../../models/login.response';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientService } from '../../services/http-client.service';
+import { RestEndpoints } from '../../services/rest-endpoints';
 
 @Component({
   selector: 'app-login',
@@ -33,9 +33,10 @@ export class LoginComponent implements OnInit{
     private fb: FormBuilder,
     private message: NzMessageService,
     private notification: NzNotificationService,
-    private loginService: LoginService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private httpClientService: HttpClientService,
+    private restEndpoints: RestEndpoints
   ) {
   }
 
@@ -43,13 +44,14 @@ export class LoginComponent implements OnInit{
       this.signupForm = this.fb.group({
         username: [null, [Validators.required]], 
         password: [null, [Validators.required]],
+        fullName: [null, [Validators.required]],
         gender: [null, [Validators.required]],
         role: [null, [Validators.required]],
         mobileNo: [null, [Validators.required]],
-        emailId: [null, [Validators.required]]
+        email: [null, [Validators.required]]
       });
       this.loginForm = this.fb.group({
-        mail: [null, [Validators.required]], 
+        username: [null, [Validators.required]], 
         password: [null, [Validators.required]] 
       });
       this.newPasswordForm = this.fb.group({
@@ -60,15 +62,18 @@ export class LoginComponent implements OnInit{
 
   toggleForgotPassword(): void {
     this.isForgotPassword = !this.isForgotPassword;
+    this.refreshLoginForm();
   }
 
   toggleSignUp(): void {
     this.isSignUp = !this.isSignUp;
+    this.refreshLoginForm();
   }
 
   toggleLogin(): void {
     this.isSignUp = false;
     this.isForgotPassword = false;
+    this.refreshSignUpForm();
   }
 
   submitForm(): void {
@@ -80,46 +85,74 @@ export class LoginComponent implements OnInit{
   }
 
   signup(): void {
-    if(this.signupForm.valid){
-      console.log("Values========>"+this.signupForm.value);
-      console.log("Sign up =======>"+this.signupForm.value.username);
-      this.createUser(this.signupForm.value).subscribe(response => {
-        console.log('User created:', response);
+    if (this.signupForm.valid) {
+      this.httpClientService.post(this.signupForm.value, this.restEndpoints.SIGN_UP, false).subscribe({
+        next: (response) => {
+          this.toggleLogin();
+          this.createNotification('success',`Registered Sucessfully`, `you have successfully registered!`);
+        },
+        error: (error) => {
+          console.error('Error occurred during signup:', error);
+          this.handleError(error); 
+        },
       });
     }
   }
 
-  createUser(userData: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(`http://localhost:8082/user`, userData, { headers });
+  login(loginRequest: any): void {
+    if (this.loginForm.valid) {
+      const username = this.loginForm.get('username')?.value; 
+      this.httpClientService.post(this.loginForm.value, this.restEndpoints.LOGIN, false).subscribe({
+        next: (response) => {
+          localStorage.setItem('Authorization', `Bearer ${response.data.accessToken}`)
+          this.router.navigate(['dashboard']);
+          this.createNotification('success',`Welcome, ${username}`, `you have successfully logged in to your account!`);
+        },
+        error: (error) => {
+          console.error('Error occurred during signup:', error);
+          this.handleError(error); 
+        },
+      });
+    }
+  }
+  
+  private handleError(error: any): void {
+    if (error.status === 400) {
+      console.error('Bad Request:', error.error.message || 'Invalid input.');
+    } else if (error.status === 401) {
+      console.error('Unauthorized:', error.error.message || 'Invalid credentials.');
+    } else if (error.status === 500) {
+      console.error('Server Error:', error.error.message || 'Something went wrong on the server.');
+    } else {
+      console.error('Unknown Error:', error);
+    }
   }
 
-// use below login funtion to call back end login api to get access token
-
-  // login(loginRequest: any): void {
-  //   this.loginService.login(loginRequest).subscribe(loginResponse => {
-  //     this.loginResponse = loginResponse;
-  //     localStorage.setItem("accessToken",loginResponse.accessToken);
-  //      // if(loginData.username == 'ashwin' && loginData.username == 'ashwin'){
-  //     //   this.toggleSetNewPassword();
-  //     //   this.createNotification('success');
-  //     // }
-  //     this.router.navigate(['/home/staffs']);
-  //   });
-  // }
-
-  // temporary login function. Use above for backend interaction
-
-   login(loginRequest: any): void {
-      this.router.navigate(['dashboard']);
-  }
-
-  createNotification(type: string): void {
+  createNotification(type: string, title: string, message: string): void {
     this.notification.create(
       type,
-      'Notification Title',
-      'This is the content of the notification. This is the content of the notification. This is the content of the notification.'
+      title,
+      message
     );
+  }
+
+  refreshSignUpForm(){
+    this.signupForm = this.fb.group({
+      username: new FormControl(null), 
+      password: new FormControl(null), 
+      fullName: new FormControl(null), 
+      gender: new FormControl(null), 
+      role: new FormControl(null), 
+      mobileNo: new FormControl(null), 
+      email: new FormControl(null), 
+    });
+  }
+
+  refreshLoginForm(){
+    this.loginForm = this.fb.group({
+      username: new FormControl(null), 
+      password: new FormControl(null), 
+    });
   }
 
 }

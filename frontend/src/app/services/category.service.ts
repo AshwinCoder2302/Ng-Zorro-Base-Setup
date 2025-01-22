@@ -7,13 +7,12 @@ import { LoginResponse } from '../models/login.response';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class CategoryService {
 
   constructor(private http: HttpClient, private restEndpoints: RestEndpoints) { }
 
-
-  login(loginRequest: any): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.restEndpoints.AUTHENTICATION, loginRequest);
+  getCategories(): Observable<any> {
+    return this.http.get(this.restEndpoints.GET_CATEGORY);
   }
 
 }

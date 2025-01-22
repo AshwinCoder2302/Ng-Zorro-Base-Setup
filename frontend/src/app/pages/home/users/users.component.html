@@ -1,26 +1,102 @@
   <div class="add-button">
-    <button nz-button nzType="primary">Add User</button>
+    <button nz-button nzType="primary" (click)="toggleCreateUserPopup()">Add User</button>
   </div>
   <nz-table [nzScroll]="{ x: '1000px', y: '400px' }" ngSkipHydration>
       <thead>
         <tr>
-          <th nzWidth="20%">User Name</th>
-          <th nzWidth="20%">Role Name</th>
-          <th nzWidth="20%">Actions</th>
+          <th nzWidth="15%">User Name</th>
+          <th nzWidth="15%">Full Name</th>
+          <th nzWidth="15%">Email</th>
+          <th nzWidth="15%">Role</th>
+          <th nzWidth="15%">Mobile No</th>
+          <th nzWidth="15%">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let user of users">
-          <td>{{ user.name }}</td>
-          <td>{{ user.roleName }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.fullName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.mobileNo }}</td>
           <td>
             <button nz-button nzType="link" (click)="onEditUser(user)">
               <span nz-icon nzType="edit" nzTheme="fill"></span>
             </button>
-            <button nz-button nzType="link" (click)="onDeleteUser(user)">
+            <button nz-button nzType="link" (click)="onDeleteUser(user.id)">
               <span style="color: red;" nz-icon nzType="delete" nzTheme="fill"></span>          </button>
           </td>
         </tr>
       </tbody>
     </nz-table>
-    
+
+<nz-modal [(nzVisible)]="isCreateUserPopup" nzTitle="Add User" (nzOnCancel)="handleCancel()">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="createUserForm" (ngSubmit)="createUser()" class="form">
+      <nz-form-item class="nz-form-item">
+        <label>Username</label>
+        <nz-form-control [nzErrorTip]="'Please input your username!'">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" formControlName="username" nz-input placeholder="Username" required />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="nz-form-item">
+        <label>Full Name</label>
+        <nz-form-control [nzErrorTip]="'Please input your full name!'">
+          <nz-input-group nzPrefixIcon="idcard">
+            <input type="text" formControlName="fullName" nz-input placeholder="Full Name" required />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="nz-form-item">
+        <label>Gender</label>
+        <nz-form-control [nzErrorTip]="'Please select your gender!'">
+          <nz-radio-group formControlName="gender">
+            <label nz-radio nzValue="Male">Male</label>
+            <label nz-radio nzValue="Female">Female</label>
+            <label nz-radio nzValue="Other">Other</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="nz-form-item">
+        <label>Role</label>
+        <nz-form-control [nzErrorTip]="'Please select a role!'">
+          <nz-select formControlName="role" nzPlaceHolder="Select a role">
+            <nz-option nzValue="Admin" nzLabel="Admin"></nz-option>
+            <nz-option nzValue="Supplier" nzLabel="Supplier"></nz-option>
+            <nz-option nzValue="Consumer" nzLabel="Consumer"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="nz-form-item">
+        <label>Mobile No</label>
+        <nz-form-control [nzErrorTip]="'Please input a valid mobile number!'">
+          <nz-input-group nzPrefixIcon="mobile">
+            <input
+              type="text"
+              formControlName="mobileNo"
+              nz-input
+              placeholder="Mobile Number"
+              required
+              pattern="^[0-9]*$" 
+              maxlength="10"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="nz-form-item">
+        <label>Email</label>
+        <nz-form-control [nzErrorTip]="'Email is not valid!'">
+          <nz-input-group nzPrefixIcon="mail">
+            <input formControlName="email" nz-input placeholder="Email" email/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+    <button nz-button nzType="primary" (click)="createUser()" [nzLoading]="isConfirmLoading">Add User</button>
+  </div>
+</nz-modal>

@@ -1,23 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClientService } from '../../../services/http-client.service';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { RestEndpoints } from '../../../services/rest-endpoints';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
-export class UsersComponent {
-  users = [
-    { id: 1, name: 'Ashwin', roleName: "admin"},
-    { id: 2, name: 'Sam', roleName: "user"},
-    { id: 3, name: 'Abinesh', roleName: "user"},
-    { id: 4, name: 'Amal Raj', roleName: "user"},
-    { id: 5, name: 'Rajesh', roleName: "user"},
-    { id: 6, name: 'Jashwanth', roleName: "user"},
-    { id: 7, name: 'Rajkumar', roleName: "user"},
-    { id: 8, name: 'Anish', roleName: "user"},
-    { id: 9, name: 'Vinoth', roleName: "user"},
-    { id: 10, name: 'Ram Kumar', roleName: "user"}
-  ];
+export class UsersComponent implements OnInit{
+
+  createUserForm!: FormGroup;
+
+  isCreateUserPopup: boolean = false;
+
+  isConfirmLoading = false;
+
+  constructor(private httpClientService:HttpClientService, 
+    private fb: FormBuilder,
+    private restEndpoints: RestEndpoints,
+    private notification: NzNotificationService
+  ){}
+
+  ngOnInit(): void {
+    this.getUsers();
+    this.createUserForm = this.fb.group({
+      username: [null, [Validators.required]], 
+      fullName: [null, [Validators.required]],
+      gender: [null, [Validators.required]],
+      role: [null, [Validators.required]],
+      mobileNo: [null, [Validators.required]],
+      email: [null, [Validators.required]]
+    });
+  }
+
+  users: any[] = [];
+
+  getUsers(): void {
+    this.httpClientService.get(this.restEndpoints.GET_USERS, true).subscribe({
+      next: (response) => {
+        if (response?.data) {
+          this.users = response.data.map((user: any) => ({
+            id: user.id,
+            fullName: user.fullName,
+            username: user.username,
+            role: user.role,
+            gender: user.gender,
+            mobileNo: user.mobileNo,
+            email: user.email
+          }));
+        }
+      }
+    });
+  }
 
   onAddCategory(): void {
     console.log('Add Category button clicked');
@@ -27,12 +63,63 @@ export class UsersComponent {
     console.log('Edit category:', category);
   }
 
-  onDeleteUser(category: any): void {
-    this.users = this.users.filter(p => p.id !== category.id);
-    console.log('Deleted category:', category);
+  onDeleteUser(id: any): void {
+    this.httpClientService.delete(id, this.restEndpoints.DELETE_USER, true).subscribe({
+      next: (response) => {
+        if (response?.data) {
+          this.getUsers();
+        }
+      }
+    });
   }
 
-  onAddUser(){
-    
+  createUser(){
+    if(this.createUserForm.valid) {
+      this.httpClientService.post(this.createUserForm.value, this.restEndpoints.CREATE_USER, true).subscribe({
+        next: (response) => {
+          this.toggleCreateUserPopup();
+          this.createNotification('success',`Success`, `User Created Sucessfully`);
+          this.getUsers();
+          this.refreshAddUserForm();
+        }
+      });
+    }
   }
+
+  toggleCreateUserPopup(): void {
+    this.isCreateUserPopup = !this.isCreateUserPopup;
+  }
+
+  createNotification(type: string, title: string, message: string): void {
+    this.notification.create(
+      type,
+      title,
+      message
+    );
+  }
+
+  handleOk(): void {
+    this.isConfirmLoading = true;
+    setTimeout(() => {
+      this.isCreateUserPopup = false;
+      this.isConfirmLoading = false;
+    }, 3000);
+  }
+
+  handleCancel(): void {
+    this.isCreateUserPopup = false;
+    this.refreshAddUserForm();
+  }
+
+  refreshAddUserForm(){
+    this.createUserForm = this.fb.group({
+      username: new FormControl(null),
+      fullName: new FormControl(null), 
+      gender: new FormControl(null), 
+      role: new FormControl(null), 
+      mobileNo: new FormControl(null), 
+      email: new FormControl(null), 
+    });
+  }
+  
 }

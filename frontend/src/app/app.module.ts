@@ -20,6 +20,9 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { HomeModule } from './pages/home/home.module';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { HomeModule } from './pages/home/home.module';
     NzBreadCrumbModule,
     NzAvatarModule,
     NzDropDownModule,
-    NzTableModule
+    NzTableModule,
+    NzModalModule,
+    NzRadioModule,
+    NzSelectModule
   ],
   providers: [
     provideClientHydration(),

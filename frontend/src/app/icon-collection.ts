@@ -1,4 +1,4 @@
-import { AppstoreOutline, DashboardOutline, DeleteFill, EditFill, LogoutOutline, ShoppingCartOutline, TeamOutline, UserAddOutline, UserOutline } from '@ant-design/icons-angular/icons';
+import { AppstoreOutline, DashboardOutline, DeleteFill, EditFill, IdcardOutline, LockOutline, LogoutOutline, MailFill, MailOutline, MobileOutline, ShoppingCartOutline, TeamOutline, UserAddOutline, UserOutline } from '@ant-design/icons-angular/icons';
 
 
 export const AllIcons = [
@@ -10,5 +10,9 @@ export const AllIcons = [
   EditFill,
   LogoutOutline,
   UserOutline,
-  UserAddOutline
+  UserAddOutline,
+  IdcardOutline,
+  MobileOutline,
+  MailOutline,
+  LockOutline
 ];

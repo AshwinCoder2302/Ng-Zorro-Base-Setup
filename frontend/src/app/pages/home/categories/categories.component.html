@@ -1,18 +1,20 @@
 <div class="add-button">
-  <button nz-button nzType="primary">Add Category</button>
+  <button nz-button (click)="toggleAddButtonClicked()" nzType="primary">Add Category</button>
 </div>
 <nz-table [nzScroll]="{ x: '1000px', y: '400px' }" ngSkipHydration>
   <thead>
     <tr>
       <th nzWidth="20%">Category Name</th>
-      <th nzWidth="20%">Price</th>
+      <th nzWidth="20%">Description</th>
+      <th nzWidth="20%">Status</th>
       <th nzWidth="20%">Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let category of categories">
       <td>{{ category.name }}</td>
-      <td>{{ category.price }}</td>
+      <td>{{ category.description }}</td>
+      <td>{{ category.status }}</td>
       <td>
         <button nz-button nzType="link" (click)="onEditCategory(category)">
           <span nz-icon nzType="edit" nzTheme="fill"></span>
@@ -24,3 +26,17 @@
     </tr>
   </tbody>
 </nz-table>
+
+<!-- <nz-modal
+      nzStyle="{ top: '20px' }"
+      nzVisible="isAddButtonClicked"
+      nzTitle="20px to Top"
+      (nzOnCancel)="handleCancelTop()"
+      (nzOnOk)="handleOkTop()"
+    >
+  <ng-container *nzModalContent>
+    <p>some contents...</p>
+    <p>some contents...</p>
+    <p>some contents...</p>
+  </ng-container>
+</nz-modal> -->

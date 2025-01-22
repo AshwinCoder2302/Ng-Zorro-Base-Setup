@@ -29,6 +29,9 @@ import { UsersComponent } from './users/users.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,10 @@ import { HttpClientModule } from '@angular/common/http';
     NzAvatarModule,
     NzDropDownModule,
     NzTableModule,
-    HttpClientModule
+    HttpClientModule,
+    NzModalModule,
+    NzRadioModule,
+    NzSelectModule
   ],
   providers: [
     { provide: NZ_ICONS, useValue: AllIcons } // Register icons here

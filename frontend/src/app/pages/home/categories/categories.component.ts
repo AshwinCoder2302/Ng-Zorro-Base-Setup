@@ -1,24 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CategoryService } from '../../../services/category.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })
-export class CategoriesComponent {
+export class CategoriesComponent implements OnInit{
 
-  categories = [
-    { id: 1, name: 'Category 1', price: 100},
-    { id: 2, name: 'Category 2', price: 200},
-    { id: 3, name: 'Category 3', price: 200},
-    { id: 4, name: 'Category 4', price: 200},
-    { id: 5, name: 'Category 5', price: 200},
-    { id: 6, name: 'Category 6', price: 200},
-    { id: 7, name: 'Category 7', price: 200},
-    { id: 8, name: 'Category 8', price: 200},
-    { id: 9, name: 'Category 9', price: 200},
-    { id: 10, name: 'Category 10', price: 200}
-  ];
+  categories: any;
+
+  isAddButtonClicked: boolean = false;
+
+  categoryForm!: FormGroup;
+
+  constructor(
+    private categoryService: CategoryService,
+    private fb: FormBuilder,
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.getCategories();
+    this.categoryForm = this.fb.group({
+      mail: [null, [Validators.required]], 
+      password: [null, [Validators.required]] 
+    });
+  }
+
+  getCategories(): any {
+    this.categoryService.getCategories().subscribe(categoriesResponse => {
+          this.categories = categoriesResponse;
+        });
+  }
 
   onAddCategory(): void {
     console.log('Add Category button clicked');
@@ -29,7 +44,25 @@ export class CategoriesComponent {
   }
 
   onDeleteCategory(category: any): void {
-    this.categories = this.categories.filter(p => p.id !== category.id);
     console.log('Deleted category:', category);
   }
+
+  toggleAddButtonClicked(): void {
+      this.isAddButtonClicked = !this.isAddButtonClicked;
+    console.log("isAddButtonClicked=====>"+this.isAddButtonClicked)
+  }
+  
+  saveCategory(): void {
+
+  }
+
+  handleOkTop(): void {
+    console.log('点击了确定');
+    this.isAddButtonClicked = false;
+  }
+
+  handleCancelTop(): void {
+    this.isAddButtonClicked = false;
+  }
+  
 }
