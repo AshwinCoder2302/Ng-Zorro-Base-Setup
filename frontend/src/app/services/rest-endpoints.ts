@@ -13,6 +13,8 @@ export class RestEndpoints {
 
     public CREATE_USER = this.BASE_URL + '/users'
 
+    public UPDATE_USER = this.BASE_URL + '/users'
+
     public GET_USER_PROFILE = this.BASE_URL + '/users/profile'
 
     public GET_USERS = this.BASE_URL + '/users'

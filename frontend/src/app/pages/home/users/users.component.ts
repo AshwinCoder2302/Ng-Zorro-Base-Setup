@@ -1,125 +1,124 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClientService } from '../../../services/http-client.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { RestEndpoints } from '../../../services/rest-endpoints';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrl: './users.component.scss'
+  styleUrls: ['./users.component.scss'],
 })
-export class UsersComponent implements OnInit{
-
+export class UsersComponent implements OnInit {
   createUserForm!: FormGroup;
+  updateUserForm!: FormGroup;
+  isPopupVisible: boolean = false; // For both create and update
+  isConfirmLoading: boolean = false;
+  popupMode: 'create' | 'update' = 'create'; // Tracks the mode of the modal
+  users: any[] = [];
 
-  isCreateUserPopup: boolean = false;
-
-  isConfirmLoading = false;
-
-  constructor(private httpClientService:HttpClientService, 
+  constructor(
     private fb: FormBuilder,
+    private httpClientService: HttpClientService,
     private restEndpoints: RestEndpoints,
     private notification: NzNotificationService
-  ){}
+  ) {}
 
   ngOnInit(): void {
     this.getUsers();
-    this.createUserForm = this.fb.group({
-      username: [null, [Validators.required]], 
+    this.initForms();
+  }
+
+  // Initialize Forms
+  private initForms(): void {
+    const userFormControls = {
+      id: [null], // Only used for the update form
+      username: [null, [Validators.required]],
       fullName: [null, [Validators.required]],
       gender: [null, [Validators.required]],
       role: [null, [Validators.required]],
-      mobileNo: [null, [Validators.required]],
-      email: [null, [Validators.required]]
-    });
+      mobileNo: [null, [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      email: [null, [Validators.required, Validators.email]],
+    };
+
+    this.createUserForm = this.fb.group({ ...userFormControls });
+    this.updateUserForm = this.fb.group({ ...userFormControls });
   }
 
-  users: any[] = [];
-
+  // Fetch Users
   getUsers(): void {
     this.httpClientService.get(this.restEndpoints.GET_USERS, true).subscribe({
       next: (response) => {
-        if (response?.data) {
-          this.users = response.data.map((user: any) => ({
-            id: user.id,
-            fullName: user.fullName,
-            username: user.username,
-            role: user.role,
-            gender: user.gender,
-            mobileNo: user.mobileNo,
-            email: user.email
-          }));
-        }
-      }
+        this.users = response?.data || [];
+      },
     });
   }
 
-  onAddCategory(): void {
-    console.log('Add Category button clicked');
-  }
+  // Open Modal
+  openPopup(mode: 'create' | 'update', user?: any): void {
+    this.popupMode = mode;
+    this.isPopupVisible = true;
 
-  onEditUser(category: any): void {
-    console.log('Edit category:', category);
-  }
-
-  onDeleteUser(id: any): void {
-    this.httpClientService.delete(id, this.restEndpoints.DELETE_USER, true).subscribe({
-      next: (response) => {
-        if (response?.data) {
-          this.getUsers();
-        }
-      }
-    });
-  }
-
-  createUser(){
-    if(this.createUserForm.valid) {
-      this.httpClientService.post(this.createUserForm.value, this.restEndpoints.CREATE_USER, true).subscribe({
-        next: (response) => {
-          this.toggleCreateUserPopup();
-          this.createNotification('success',`Success`, `User Created Sucessfully`);
-          this.getUsers();
-          this.refreshAddUserForm();
-        }
-      });
+    if (mode === 'update' && user) {
+      this.updateUserForm.patchValue(user);
+    } else {
+      this.createUserForm.reset();
     }
   }
 
-  toggleCreateUserPopup(): void {
-    this.isCreateUserPopup = !this.isCreateUserPopup;
+  // Close Modal
+  closePopup(): void {
+    this.isPopupVisible = false;
+    this.createUserForm.reset();
+    this.updateUserForm.reset();
   }
 
-  createNotification(type: string, title: string, message: string): void {
-    this.notification.create(
-      type,
-      title,
-      message
-    );
+  // Create User
+  createUser(): void {
+    if (this.createUserForm.valid) {
+      this.isConfirmLoading = true;
+      this.httpClientService
+        .post(this.createUserForm.value, this.restEndpoints.CREATE_USER, true)
+        .subscribe({
+          next: () => {
+            this.notify('success', 'User Created Successfully');
+            this.getUsers();
+            this.closePopup();
+          },
+          complete: () => (this.isConfirmLoading = false),
+        });
+    }
   }
 
-  handleOk(): void {
-    this.isConfirmLoading = true;
-    setTimeout(() => {
-      this.isCreateUserPopup = false;
-      this.isConfirmLoading = false;
-    }, 3000);
+  // Update User
+  updateUser(): void {
+    if (this.updateUserForm.valid) {
+      this.isConfirmLoading = true;
+      this.httpClientService
+        .patch(this.updateUserForm.value, this.restEndpoints.UPDATE_USER+"/"+this.updateUserForm.value.id, true)
+        .subscribe({
+          next: () => {
+            this.notify('success', 'User Updated Successfully');
+            this.getUsers();
+            this.closePopup();
+          },
+          complete: () => (this.isConfirmLoading = false),
+        });
+    }
   }
 
-  handleCancel(): void {
-    this.isCreateUserPopup = false;
-    this.refreshAddUserForm();
-  }
-
-  refreshAddUserForm(){
-    this.createUserForm = this.fb.group({
-      username: new FormControl(null),
-      fullName: new FormControl(null), 
-      gender: new FormControl(null), 
-      role: new FormControl(null), 
-      mobileNo: new FormControl(null), 
-      email: new FormControl(null), 
+  // Delete User
+  deleteUser(id: string): void {
+    this.httpClientService.delete(id, this.restEndpoints.DELETE_USER, true).subscribe({
+      next: () => {
+        this.notify('success', 'User Deleted Successfully');
+        this.getUsers();
+      },
     });
   }
-  
+
+  // Notifications
+  private notify(type: string, message: string): void {
+    this.notification.create(type, 'Notification', message);
+  }
 }

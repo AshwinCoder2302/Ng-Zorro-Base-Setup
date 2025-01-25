@@ -40,6 +40,31 @@ export class HttpClientService {
     );
   }
 
+  patch(requestData: any, requestURL: any, isAuthentication: boolean): Observable<any> {
+   
+    const authToken = localStorage.getItem('Authorization');
+    let headers = new HttpHeaders;
+    if (authToken) {
+      if(isAuthentication) {
+        headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': authToken
+        });
+      } else {
+        headers = new HttpHeaders({
+          'Content-Type': 'application/json'
+        });
+      }
+    }
+
+  return this.http.patch<any>(requestURL, requestData, { headers }).pipe(
+    catchError((error) => {
+      console.error('HTTP error:', error);
+      return throwError(() => error); 
+    })
+  );
+}
+
   get(requestURL: any, isAuthentication: boolean): Observable<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -60,15 +85,20 @@ export class HttpClientService {
 
   delete(id: any, requestURL: any, isAuthentication: boolean): Observable<any> {
     const fullRequestURL = requestURL + "/" +id;
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-  
     const authToken = localStorage.getItem('Authorization');
+    let headers = new HttpHeaders;
     if (authToken) {
-      headers = headers.set('Authorization', authToken); 
+      if(isAuthentication) {
+        headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': authToken
+        });
+      } else {
+        headers = new HttpHeaders({
+          'Content-Type': 'application/json'
+        });
+      }
     }
-  
     return this.http.delete<any>(fullRequestURL, { headers }).pipe(
       catchError((error) => {
         console.error('HTTP error:', error);
